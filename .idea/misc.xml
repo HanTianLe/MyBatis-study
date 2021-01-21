@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/easy_01_mybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/easy_02_mybatis_generator/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_01/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_02/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_03/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_04/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_05/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_06/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_07/pom.xml" />
+        <option value="$PROJECT_DIR$/MyBatis_08/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

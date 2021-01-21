@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--通过Mapper代理，实现自定义接口。推荐使用~~~-->
+        <!--通过Mapper代理，实现自定义接口。推荐使用~~~-->
+        <!--通过Mapper代理，实现自定义接口。推荐使用~~~-->
+
+<mapper namespace="com.htl.repository.AccountRepository">
+        <!--配置二级缓存-->
+        <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+                <!-- 缓存创建之后，最后一次访问缓存的时间至缓存失效的时间间隔 -->
+                <property name="timeToIdleSeconds" value="3600"/>
+                <!-- 缓存自创建时间起至失效的时间间隔 -->
+                <property name="timeToLiveSeconds" value="3600"/>
+                <!-- 缓存回收策略略，LRU表示移除近期使⽤用最少的对象 -->
+                <property name="memoryStoreEvictionPolicy" value="LRU"/>
+        </cache>
+
+        <!-- statement 标签：select、update、delete、insert 分别对应查询、修改、删除、添加操作。-->
+        <!-- parameterType：参数的数据类型。-->
+        <!-- resultType：返回的结果类型。-->
+        <insert id="save" parameterType="com.htl.entity.Account">
+            insert into t_account(username,password,age) values(#{username},#{password},#{age})
+        </insert>
+
+        <!--parameterType里面的long 写成 java.lang.Long 也可以-->
+        <delete id="deleteById" parameterType="long">
+            delete from t_account where id = #{id}
+        </delete>
+
+
+        <!--Java Bean-->
+        <update id="update" parameterType="com.htl.entity.Account">
+                update t_account set username = #{username},password = #{password},age = #{age} where id = #{id}
+        </update>
+
+
+        <!--resultType里面的结果类型不要根据接口里面的List<Account>写list集合，而是要写泛型里面的Account。-->
+        <select id="findAll" resultType="com.htl.entity.Account">
+                select * from t_account
+        </select>
+
+        <!--Java Bean，通过Id查询Account-->
+        <select id="findById" parameterType="long" resultType="com.htl.entity.Account">
+                select * from t_account where id = #{id};
+        </select>
+
+        <!--String 类型，通过name查询Account-->
+        <select id="findByName" parameterType="java.lang.String" resultType="com.htl.entity.Account">
+                select * from t_account where username = #{username}
+        </select>
+
+        <!--包装类，通过Id查询Account-->
+        <select id="findById2" parameterType="java.lang.Long" resultType="com.htl.entity.Account">
+                select * from t_account where id = #{id};
+        </select>
+
+        <!--多个参数，通过name和age查询Account-->
+        <select id="findByNameAndAge" resultType="com.htl.entity.Account">
+                select * from t_account where username = #{param1} and age = #{param2}
+        </select><!--用下标的方式取name和age。param表示参数，1和2表示下标数。不同版本的mybatis格式可能不一样。-->
+
+        <!--基本数据类型，统计 Account 总数。-->
+        <select id="count" resultType="int">
+                select count(id) from t_account
+        </select>
+
+        <!--包装类，统计 Account 总数。-->
+        <select id="count2" resultType="java.lang.Integer">
+                select count(id) from t_account
+        </select>
+
+        <!--String 类型，通过 id 查询 Account 的 name -->
+        <select id="findNameById" resultType="java.lang.String">
+                select username from t_account where id = #{id}
+        </select>
+
+
+        <!-- 4种动态SQL -->
+        <select id="findByAccount" parameterType="com.htl.entity.Account" resultType="com.htl.entity.Account">
+                <!--select * from t_account where
+                <if test="id != 0">
+                        id = #{id}
+                </if>
+                <if test="username != null">
+                        and username = #{username}
+                </if>
+                <if test="password != null">
+                        and password = #{password}
+                </if>
+                <if test="age != 0">
+                        and age = #{age}
+                </if>-->
+
+
+                <!--select * from t_account
+                <where>
+                    <if test="id != 0">
+                            id = #{id}
+                    </if>
+                    <if test="username != null">
+                            and username = #{username}
+                    </if>
+                    <if test="password != null">
+                            and password = #{password}
+                    </if>
+                    <if test="age != 0">
+                            and age = #{age}
+                    </if>
+                </where>-->
+
+
+                select * from t_account
+                <where>
+                    <choose>
+                        <when test="id != 0">
+                            id = #{id}
+                        </when>
+                        <when test="username != null">
+                            and username = #{username}
+                        </when>
+                        <when test="password != null">
+                            and password = #{password}
+                        </when>
+                        <when test="age != 0">
+                            and age = #{age}
+                        </when>
+                    </choose>
+                </where>
+
+
+                <!--select * from t_account
+                <trim prefix="where" prefixOverrides="and">
+                    <if test="id !=0 ">
+                        id = #{id}
+                    </if>
+                    <if test="username != null">
+                        and username = #{username}
+                    </if>
+                    <if test="password != null">
+                        and password = #{password}
+                    </if>
+                    <if test="age != 0">
+                        and age = #{age}
+                    </if>
+                </trim>-->
+        </select>
+
+
+        <update id="update2" parameterType="com.htl.entity.Account">
+            update t_account
+            <set>
+                <if test="username != null">
+                    username = #{username}
+                </if>
+                <if test="password != null">
+                    password = #{password}
+                </if>
+                <if test="age != 0">
+                    age = #{age}
+                </if>
+            </set>
+            where id = #{id}
+        </update>
+
+
+        <select id="findByIds" parameterType="com.htl.entity.Account" resultType="com.htl.entity.Account">
+            select * from t_account
+            <where>
+                <foreach collection="ids" open="id in (" close=")" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </where>
+        </select>
+
+</mapper>
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--加载jdbc数据文件-->
+    <properties resource="jdbc.properties"/>
+
+    <!--配置参数-->
+    <settings>
+        <!--开启MyBatis延迟加载-->
+        <!--延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--开启时，任一方法的调用都会加载该对象的所有延迟加载属性。 否则，每个延迟加载属性会按需加载。-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+    <!--设置别名-->
+    <typeAliases>
+        <!-- 方法1 -->
+        <!--<typeAlias type="com.User" alias="user"/>-->
+        <!-- 方法2：批量别名定义，扫描整个包下的类，别名为类名（首字母大写或小写都可以）如：User=User、user -->
+        <package name="com.htl.domain"/>
+    </typeAliases>
+
+    <!--配置连数据源信息-->
+    <environments default="mysql">
+        <!--配置mysql环境-->
+        <environment id="mysql">
+            <!--事务类型-->
+            <transactionManager type="JDBC"/>
+            <!--连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--加载映射mapper-->
+    <mappers>
+        <!-- 方法1：使用相对于类路径的资源。-->
+        <!--<mapper resource="com/htl/mapper/UserMapper.xml"/>-->
+        <!-- 方法2：注册指定包下的所有mapper接口。-->
+        <!-- 注意：此种方法要求mapper接口名称和mapper映射文件名称相同，且放在同一个目录中。-->
+        <package name="com.htl.mapper"/>
+    </mappers>
+
+</configuration>

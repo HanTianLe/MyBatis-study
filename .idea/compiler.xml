@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="easy_02_mybatis_generator" />
+        <module name="MyBatis_08" />
+        <module name="MyBatis_07" />
+        <module name="MyBatis_06" />
+        <module name="MyBatis_05" />
+        <module name="MyBatis_04" />
+        <module name="MyBatis_03" />
+        <module name="MyBatis_02" />
+        <module name="MyBatis_01" />
+        <module name="easy_01_mybatis" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="easy_01_mybatis" target="1.8" />
+      <module name="easy_02_mybatis_generator" target="1.8" />
+      <module name="MyBatis_01" target="1.8" />
+      <module name="MyBatis_02" target="1.8" />
+      <module name="MyBatis_03" target="1.8" />
+      <module name="MyBatis_04" target="1.8" />
+      <module name="MyBatis_05" target="1.8" />
+      <module name="MyBatis_06" target="1.8" />
+      <module name="MyBatis_07" target="1.8" />
+      <module name="MyBatis_08" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

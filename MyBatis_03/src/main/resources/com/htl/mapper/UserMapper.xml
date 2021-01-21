@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.htl.mapper.UserMapper">
+
+    <!-- 定义User2的resultMap -->
+    <resultMap id="userAccountMap" type="user2">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <!-- 配置user2对象当中account2s集合的映射 -->
+        <collection property="account2s" ofType="account2">
+            <!-- ofType="account2"表示集合中元素的类型-->
+            <id property="id" column="aid"/>
+            <result property="uid" column="uid"/>
+            <result property="money" column="money"/>
+        </collection>
+    </resultMap>
+
+    <!-- 定义User4的resultMap-->
+    <resultMap id="user4Map" type="user4">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <collection property="role4s" ofType="role4">
+            <id property="roleId" column="rid"/>
+            <result property="roleName" column="role_name"/>
+            <result property="roleDesc" column="role_desc"/>
+        </collection>
+    </resultMap>
+    
+    <!-- 查询所有（一对多） -->
+    <select id="findAll" resultMap="userAccountMap">
+        select u.*,a.id as aid,a.UID as uid,a.MONEY as money from user u
+        left outer join account a on u.id=a.UID
+    </select>
+
+    <!-- 查询所有[人物对应角色]（多对多） -->
+    <select id="findAllUserRole" resultMap="user4Map">
+        select u.*,r.ID as rid,r.ROLE_NAME,r.ROLE_DESC from user u
+        left outer join user_role ur on u.id = ur.UID
+        left outer join role r on r.ID = ur.RID
+    </select>
+
+</mapper>

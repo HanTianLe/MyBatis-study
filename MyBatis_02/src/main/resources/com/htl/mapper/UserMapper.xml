@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.htl.mapper.UserMapper">
+
+    <!-- 了解内容：抽取重复sql语句 -->
+    <sql id="defaultUser">
+        select * from user
+    </sql>
+
+    <!-- 查询所有用户 -->
+    <select id="findAll" resultType="user">
+        <!--select * from user-->
+        <include refid="defaultUser"></include>
+        <!-- include refid=""调用抽取重复的sql语句 -->
+    </select>
+
+    <!-- 根据用户id查询用户 -->
+    <select id="findById" parameterType="int" resultType="user">
+        select * from user where id=#{uid}
+    </select>
+
+    <!-- 根据名称模糊查询用户 -->
+    <select id="findByName" parameterType="string" resultType="user">
+        select * from user where username like #{username} <!-- PreparedStatement的参数占位符（这个更好！） -->
+    </select>
+
+    <!-- 根据queryVo中的条件查询用户 -->
+    <select id="findUserByVo" parameterType="queryVo" resultType="user">
+        select * from user where username like #{user.username}
+    </select>
+
+    <!-- 根据传入参数条件查询用户 -->
+    <select id="findUserByCondition" parameterType="user" resultType="user">
+        <include refid="defaultUser"/>
+        <where>
+            <if test="username != null">
+                and username=#{username}
+            </if>
+            <if test="sex != null">
+                and sex=#{sex}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据QueryVo中提供的id集合(ids)查询用户 -->
+    <select id="findUserInIds" parameterType="queryVo" resultType="user">
+        <!--select * from user where id in (1,45,53)-->
+        <!--select * from user-->
+        <include refid="defaultUser"/>
+        <!-- include refid=""调用抽取重复的sql语句 -->
+        <where>
+            <if test="ids != null and ids.size()>0">
+                <foreach collection="ids" open="id in (" close=")" item="id" separator=",">
+                <!-- collection:代表要遍历的集合元素，注意编写时不要写#{} -->
+                <!-- open:代表语句的开始部分 -->
+                <!-- close:代表结束部分 -->
+                <!-- item:代表遍历集合的每个元素，生成的变量名 -->
+                <!-- sperator:代表分隔符 -->
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>

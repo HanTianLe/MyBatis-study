@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.htl.mapper.UserMapper">
+
+    <!-- 定义User的resultMap -->
+    <resultMap id="userAccountMap" type="user">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <!-- 配置user对象当中accounts集合的映射 -->
+        <collection property="accounts" column="id" ofType="account" select="com.htl.mapper.AccountMapper.findAccountByUid"/>
+    </resultMap>
+
+    <!-- 查询所有（一对多） -->
+    <select id="findAll" resultMap="userAccountMap">
+        select * from user
+    </select>
+
+    <!-- 根据id查询用户 -->
+    <select id="findById" parameterType="int" resultType="user">
+        select * from user where id = #{uid}
+    </select>
+
+</mapper>

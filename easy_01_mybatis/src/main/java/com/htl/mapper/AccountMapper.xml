@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--这是原生接口，不推荐使用-->
+        <!--这是原生接口，不推荐使用-->
+        <!--这是原生接口，不推荐使用-->
+<mapper namespace="com.htl.mapper.AccountMapper">   <!--namespace 通常设置为文件所在包 + 文件名的形式。-->
+    <!--id 是实际调用 MyBatis 方法时需要用到的参数。parameterType 是调用对应方法时参数的数据类型。-->
+    <insert id="save" parameterType="com.htl.entity.Account"><!--parameterType里面的Account相当于对象-->
+        insert into t_account(username,password,age) values(#{username},#{password},#{age})
+    </insert>
+    <!--
+    #{username},#{password},#{age}
+    表示取的是Account里面的username、password、age
+    作为values的值。
+    -->
+</mapper>
+
